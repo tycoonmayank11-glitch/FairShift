@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: fairshift
+    runtime: python
+    plan: free
+    rootDir: fairshift
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true

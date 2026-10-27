@@ -20,6 +20,13 @@ If activation is blocked, run these instead:
 
 4. Open http://127.0.0.1:5000.
 
+## Deploy on Render
+1. In Render, choose **New → Blueprint** and connect `tycoonmayank11-glitch/FairShift`.
+2. Render reads the root `render.yaml`, installs `fairshift/requirements.txt`, and starts the `fairshift` web service.
+3. Use the generated `onrender.com` URL after the first deploy completes.
+
+The demo uses SQLite, which is not persistent across all Render restarts or redeploys on the free plan. It also has no login or role-based access, so do not enter sensitive or real worker data.
+
 ## 2-minute demo
 1. Worker Portal → Construction → Check in.
 2. Submit a sample safety report.

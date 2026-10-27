@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+import os
 import sqlite3
 from pathlib import Path
 from datetime import datetime, date
-app=Flask(__name__); app.secret_key="fairshift-demo"
-DB=Path(__file__).with_name("fairshift.db")
+app=Flask(__name__); app.secret_key=os.environ.get("SECRET_KEY", "fairshift-demo")
+DB=Path(os.environ.get("FAIRSHIFT_DB_PATH", Path(__file__).with_name("fairshift.db")))
 INDUSTRIES=["Construction","College"]
 def connect():
     c=sqlite3.connect(DB); c.row_factory=sqlite3.Row; return c
@@ -69,4 +70,7 @@ def status(rid):
     with connect() as c:c.execute("UPDATE reports SET status=? WHERE id=?",(value,rid))
     flash("Report status updated.","success")
     return redirect(url_for("index",view="admin",industry=request.form.get("industry","Construction")))
-if __name__=="__main__":init();app.run(debug=True)
+init()
+
+if __name__=="__main__":
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
